@@ -1,6 +1,7 @@
-#include <bits/stdc++.h>
+#include <iostream> 
+#include <vector>
 using namespace std;
-typedef long long int ll;
+
 int evaluate(vector <vector<char>> board){
     for(int i=0; i<3; i++){
         if(board[i][0]==board[i][1] and board[i][1]==board[i][2]){
@@ -26,19 +27,29 @@ bool isNext(vector <vector<char>> board){
     }
     return false;
 }
-vector<int> findNext(vector <vector<char>> board, bool isX, int depth){
+
+/* 
+    funtion findnext => for finding next best move
+    parameters:
+    board => current state of board
+    isMaxer => true if it is maximizer's move  
+*/
+vector<int> findNext(vector <vector<char>> board, bool isMaxer){
+    //  win, lose, draw base cases
     int eval = evaluate(board);
     if(eval) return {-1, -1, eval};
     if(!isNext(board)) {
         return {-1, -1, 0};    
     }
-    if(isX){
+
+    //  minimax logic
+    if(isMaxer){
         vector<int> score = {-1, -1, -20};
         for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){
                 if(board[i][j]==' '){
                     board[i][j]='X';
-                    vector<int> tem = findNext(board, false, depth+1);
+                    vector<int> tem = findNext(board, false);
                     if(score[2]<tem[2]){
                         score[0]=i;
                         score[1]=j;
@@ -55,7 +66,7 @@ vector<int> findNext(vector <vector<char>> board, bool isX, int depth){
             for(int j=0; j<3; j++){
                 if(board[i][j]==' '){
                     board[i][j]='O';
-                    vector<int> tem = findNext(board, true, depth+1);
+                    vector<int> tem = findNext(board, true);
                     if(score[2]>tem[2]){
                         score[0]=i;
                         score[1]=j;
@@ -70,6 +81,7 @@ vector<int> findNext(vector <vector<char>> board, bool isX, int depth){
 }
 
 int main() {
+    //  initalized empty board
     vector <vector<char>> board = {
             {' ', ' ', ' '},
             {' ', ' ', ' '},
@@ -85,7 +97,8 @@ int main() {
         board[0][0]=pc;
         player='X';
     }
-	while(1){
+    //  Game loop
+	while(true){
         int res = evaluate(board);
         if(res!=0 or !isNext(board)) {
             for(int i=0; i<3; i++){
@@ -105,13 +118,17 @@ int main() {
             }
             break;
         } 
-	    for(int i=0; i<3; i++){
+	    
+        //  printing current board
+        for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){
                 cout<<" "<<board[i][j]<<" ";
                 if(j!=2) cout<<"|";
             }
             if(i!=2) cout<<"\n - | - | - \n";
         }
+        
+        //  player's move
         cout<<"\nEnter coordinate of your move in (x,y) format {0-index and no space}: ";
         string coord;
         cin>>coord;
@@ -121,8 +138,12 @@ int main() {
             cout<<"Already Filled! RETRY:\n";
             continue;
         }
-	    vector<int> v = findNext(board, isX, 0);
+	    
+        //  computer's move
+        vector<int> v = findNext(board, isX);
 	    if(isNext(board))   board[v[0]][v[1]]=pc;
+        
+        // clear screen command
         cout << "\033[2J\033[1;1H";
 	}
 	return 0;
