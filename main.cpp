@@ -27,8 +27,10 @@ bool isNext(vector <vector<char>> board){
     return false;
 }
 vector<int> findNext(vector <vector<char>> board, bool isX, int depth){
+    int eval = evaluate(board);
+    if(eval) return {-1, -1, eval};
     if(!isNext(board)) {
-        return {-1, -1, evaluate(board)};    
+        return {-1, -1, 0};    
     }
     if(isX){
         vector<int> score = {-1, -1, -20};
@@ -37,13 +39,12 @@ vector<int> findNext(vector <vector<char>> board, bool isX, int depth){
                 if(board[i][j]==' '){
                     board[i][j]='X';
                     vector<int> tem = findNext(board, false, depth+1);
-                    //cout<<"("<<i<<","<<j<<") => "<<tem[2]<<"\n";
                     if(score[2]<tem[2]){
                         score[0]=i;
                         score[1]=j;
                         score[2]=tem[2];
                     }
-                    else board[i][j]=' ';
+                    board[i][j]=' ';
                 }
             }
         }
@@ -55,13 +56,12 @@ vector<int> findNext(vector <vector<char>> board, bool isX, int depth){
                 if(board[i][j]==' '){
                     board[i][j]='O';
                     vector<int> tem = findNext(board, true, depth+1);
-                    //cout<<"("<<i<<","<<j<<") => "<<tem[2]<<"\n";
                     if(score[2]>tem[2]){
-                        score[0]=tem[0];
-                        score[1]=tem[1];
+                        score[0]=i;
+                        score[1]=j;
                         score[2]=tem[2];
                     }
-                    else board[i][j]=' ';
+                    board[i][j]=' ';
                 }
             }
         }
@@ -76,12 +76,35 @@ int main() {
             {' ', ' ', ' '}            
     };
     cout<<"Do you want to move first? Press 'F' to move first or press any key to continue:\n";
-    char c='!';
+    char c='!',player='O',pc='X';
     cin>>c;
+    bool isX=true;
     if(c!='F'){
-        board[0][0]='X';
+        isX=false;
+        pc='O';
+        board[0][0]=pc;
+        player='X';
     }
 	while(1){
+        int res = evaluate(board);
+        if(res!=0 or !isNext(board)) {
+            for(int i=0; i<3; i++){
+                for(int j=0; j<3; j++){
+                    cout<<" "<<board[i][j]<<" ";
+                    if(j!=2) cout<<"|";
+                }
+                if(i!=2) cout<<"\n - | - | - \n";
+            }
+            cout<<"\n";
+            if(res<0){
+                cout<<"You Win!!\n";
+            }else if(res>0){
+                cout<<"You Lose!!\n";
+            }else{
+                cout<<"Draww!!\n";
+            }
+            break;
+        } 
 	    for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){
                 cout<<" "<<board[i][j]<<" ";
@@ -93,25 +116,14 @@ int main() {
         string coord;
         cin>>coord;
         if(board[coord[1]-'0'][coord[3]-'0']==' '){
-            board[coord[1]-'0'][coord[3]-'0']='O';
+            board[coord[1]-'0'][coord[3]-'0']=player;
         }else{
             cout<<"Already Filled! RETRY:\n";
             continue;
-        } 
-	    vector<int> v = findNext(board, true, 0);
-	    board[v[0]][v[1]]='X';
-        int res = evaluate(board);
-        if(isNext(board) and res==0) cout << "\033[2J\033[1;1H";
-        else {
-            if(res<0){
-                cout<<"You Win!!\n";
-            }else if(res>0){
-                cout<<"You Lose!!\n";
-            }else{
-                cout<<"Draww!!\n";
-            }
-            break;
         }
+	    vector<int> v = findNext(board, isX, 0);
+	    if(isNext(board))   board[v[0]][v[1]]=pc;
+        cout << "\033[2J\033[1;1H";
 	}
 	return 0;
 }
