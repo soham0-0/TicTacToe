@@ -109,6 +109,7 @@ int main() {
                 if(i!=2) cout<<"\n - | - | - \n";
             }
             cout<<"\n";
+            if(!isX) res*=-1;   //  flipping win lose condition
             if(res<0){
                 cout<<"You Win!!\n";
             }else if(res>0){
@@ -142,7 +143,7 @@ int main() {
         //  computer's move
         vector<int> v = findNext(board, isX);
 	    if(isNext(board))   board[v[0]][v[1]]=pc;
-        
+
         // clear screen command
         cout << "\033[2J\033[1;1H";
 	}
