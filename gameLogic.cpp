@@ -80,72 +80,72 @@ vector<int> findNext(vector <vector<char>> board, bool isMaxer){
     }
 }
 
-int main() {
-    //  initalized empty board
-    vector <vector<char>> board = {
-            {' ', ' ', ' '},
-            {' ', ' ', ' '},
-            {' ', ' ', ' '}            
-    };
-    cout<<"Do you want to move first? Press 'F' to move first or press any key to continue:\n";
-    char c='!',player='O',pc='X';
-    cin>>c;
-    bool isX=true;
-    if(c!='F'){
-        isX=false;
-        pc='O';
-        board[0][0]=pc;
-        player='X';
-    }
-    //  Game loop
-	while(true){
-        int res = evaluate(board);
-        if(res!=0 or !isNext(board)) {
-            for(int i=0; i<3; i++){
-                for(int j=0; j<3; j++){
-                    cout<<" "<<board[i][j]<<" ";
-                    if(j!=2) cout<<"|";
-                }
-                if(i!=2) cout<<"\n - | - | - \n";
-            }
-            cout<<"\n";
-            if(!isX) res*=-1;   //  flipping win lose condition
-            if(res<0){
-                cout<<"You Win!!\n";
-            }else if(res>0){
-                cout<<"You Lose!!\n";
-            }else{
-                cout<<"Draww!!\n";
-            }
-            break;
-        } 
+// int main() {
+//     //  initalized empty board
+//     vector <vector<char>> board = {
+//             {' ', ' ', ' '},
+//             {' ', ' ', ' '},
+//             {' ', ' ', ' '}            
+//     };
+//     cout<<"Do you want to move first? Press 'F' to move first or press any key to continue:\n";
+//     char c='!',player='O',pc='X';
+//     cin>>c;
+//     bool isX=true;
+//     if(c!='F'){
+//         isX=false;
+//         pc='O';
+//         board[0][0]=pc;
+//         player='X';
+//     }
+//     //  Game loop
+// 	while(true){
+//         int res = evaluate(board);
+//         if(res!=0 or !isNext(board)) {
+//             for(int i=0; i<3; i++){
+//                 for(int j=0; j<3; j++){
+//                     cout<<" "<<board[i][j]<<" ";
+//                     if(j!=2) cout<<"|";
+//                 }
+//                 if(i!=2) cout<<"\n - | - | - \n";
+//             }
+//             cout<<"\n";
+//             if(!isX) res*=-1;   //  flipping win lose condition
+//             if(res<0){
+//                 cout<<"You Win!!\n";
+//             }else if(res>0){
+//                 cout<<"You Lose!!\n";
+//             }else{
+//                 cout<<"Draww!!\n";
+//             }
+//             break;
+//         } 
 	    
-        //  printing current board
-        for(int i=0; i<3; i++){
-            for(int j=0; j<3; j++){
-                cout<<" "<<board[i][j]<<" ";
-                if(j!=2) cout<<"|";
-            }
-            if(i!=2) cout<<"\n - | - | - \n";
-        }
+//         //  printing current board
+//         for(int i=0; i<3; i++){
+//             for(int j=0; j<3; j++){
+//                 cout<<" "<<board[i][j]<<" ";
+//                 if(j!=2) cout<<"|";
+//             }
+//             if(i!=2) cout<<"\n - | - | - \n";
+//         }
         
-        //  player's move
-        cout<<"\nEnter coordinate of your move in (x,y) format {0-index and no space}: ";
-        string coord;
-        cin>>coord;
-        if(board[coord[1]-'0'][coord[3]-'0']==' '){
-            board[coord[1]-'0'][coord[3]-'0']=player;
-        }else{
-            cout<<"Already Filled! RETRY:\n";
-            continue;
-        }
+//         //  player's move
+//         cout<<"\nEnter coordinate of your move in (x,y) format {0-index and no space}: ";
+//         string coord;
+//         cin>>coord;
+//         if(board[coord[1]-'0'][coord[3]-'0']==' '){
+//             board[coord[1]-'0'][coord[3]-'0']=player;
+//         }else{
+//             cout<<"Already Filled! RETRY:\n";
+//             continue;
+//         }
 	    
-        //  computer's move
-        vector<int> v = findNext(board, isX);
-	    if(isNext(board))   board[v[0]][v[1]]=pc;
+//         //  computer's move
+//         vector<int> v = findNext(board, isX);
+// 	    if(isNext(board))   board[v[0]][v[1]]=pc;
 
-        // clear screen command
-        cout << "\033[2J\033[1;1H";
-	}
-	return 0;
-}
+//         // clear screen command
+//         cout << "\033[2J\033[1;1H";
+// 	}
+// 	return 0;
+// }
