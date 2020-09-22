@@ -2,7 +2,7 @@
 #include<iostream>
 #include<string>
 #include<vector>
-#include "gameLogic.cpp"
+#include "gameLogic.h"
 using namespace std;
 
 const int WIDTH = 300;

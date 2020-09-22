@@ -1,5 +1,6 @@
 #include <iostream> 
 #include <vector>
+#include"gameLogic.h"
 using namespace std;
 
 int evaluate(vector <vector<char>> board){
