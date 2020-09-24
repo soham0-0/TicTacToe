@@ -7,8 +7,9 @@ Since TicTacToe has very few possible combinations, if two experienced players p
 - SDL (_follow [this link](https://wiki.libsdl.org/Installation) to install on your system_)
 
 ## Build:
-1.  git clone https://github.com/soham0-0/TicTacToe.git
-2.  cd TicTacToe/
-3.  run ```make all``` in terminal
+1. Open Terminal
+2.  ```git clone https://github.com/soham0-0/TicTacToe.git```
+3.  ```cd TicTacToe/```
+4.  ```make all```
 ---
 ## Have Fun!🤪
