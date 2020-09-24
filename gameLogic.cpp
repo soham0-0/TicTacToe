@@ -35,7 +35,7 @@ bool isNext(vector <vector<char>> board){
     board => current state of board
     isMaxer => true if it is maximizer's move  
 */
-vector<int> findNext(vector <vector<char>> board, bool isMaxer){
+vector<int> findNext(vector <vector<char>> board, bool isMaxer, int alpha, int beta){
     //  win, lose, draw base cases
     int eval = evaluate(board);
     if(eval) return {-1, -1, eval};
@@ -50,7 +50,7 @@ vector<int> findNext(vector <vector<char>> board, bool isMaxer){
             for(int j=0; j<3; j++){
                 if(board[i][j]==' '){
                     board[i][j]='X';
-                    vector<int> tem = findNext(board, false);
+                    vector<int> tem = findNext(board, false, alpha, beta);
                     if(score[2]<tem[2]){
                         score[0]=i;
                         score[1]=j;
@@ -58,6 +58,8 @@ vector<int> findNext(vector <vector<char>> board, bool isMaxer){
                     }
                     board[i][j]=' ';
                 }
+                alpha=max(score[2], alpha);
+                if(alpha>=beta) return score;
             }
         }
         return score;
@@ -67,7 +69,7 @@ vector<int> findNext(vector <vector<char>> board, bool isMaxer){
             for(int j=0; j<3; j++){
                 if(board[i][j]==' '){
                     board[i][j]='O';
-                    vector<int> tem = findNext(board, true);
+                    vector<int> tem = findNext(board, true, alpha, beta);
                     if(score[2]>tem[2]){
                         score[0]=i;
                         score[1]=j;
@@ -75,6 +77,8 @@ vector<int> findNext(vector <vector<char>> board, bool isMaxer){
                     }
                     board[i][j]=' ';
                 }
+                beta = min(score[2], beta);
+                if(alpha>=beta) return score;
             }
         }
         return score;

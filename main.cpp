@@ -49,7 +49,7 @@ int main(int argc, char* args[]){
                     SDL_BlitScaled(Xsurf, NULL, surf, &playerRect);
                     SDL_UpdateWindowSurface(win); 
                     SDL_Delay(500);
-                    vector<int> v = findNext(board, false);
+                    vector<int> v = findNext(board, false, -20, 20);
                     if(isNext(board))   board[v[0]][v[1]]='O';
                     SDL_Rect pcRect = fixMove(v[0], v[1]);
                     SDL_BlitScaled(Osurf, NULL, surf, &pcRect);

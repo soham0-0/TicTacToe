@@ -4,5 +4,5 @@
 using namespace std;
 int evaluate(vector <vector<char>> board);
 bool isNext(vector <vector<char>> board);
-vector<int> findNext(vector <vector<char>> board, bool isMaxer);
+vector<int> findNext(vector <vector<char>> board, bool isMaxer, int alpha, int beta);
 #endif 
